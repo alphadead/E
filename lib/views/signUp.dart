@@ -1,5 +1,7 @@
+import 'package:endroid/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class SignupPage extends StatefulWidget {
@@ -9,6 +11,16 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   var _lights = false;
+  TextEditingController usernameTextEditingController =
+      new TextEditingController();
+  TextEditingController emailTextEditingController =
+      new TextEditingController();
+  TextEditingController passwordTextEditingController =
+      new TextEditingController();
+  TextEditingController passwordcheckTextEditingController =
+      new TextEditingController();
+  TextEditingController numberTextEditingController =
+      new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +46,14 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
                     CupertinoFormRow(
                       child: CupertinoTextFormFieldRow(
-                        placeholder: "Enter Name",
+                        controller: usernameTextEditingController,
+                        placeholder: "Enter Username",
                       ),
-                      prefix: "Name".text.make(),
+                      prefix: "Username".text.make(),
                     ),
                     CupertinoFormRow(
                       child: CupertinoTextFormFieldRow(
+                        controller: numberTextEditingController,
                         placeholder: "Enter Phone",
                       ),
                       prefix: "Phone".text.make(),
@@ -51,18 +65,21 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
                     CupertinoFormRow(
                       child: CupertinoTextFormFieldRow(
+                        controller: emailTextEditingController,
                         placeholder: "Enter email",
                       ),
                       prefix: "Email".text.make(),
                     ),
                     CupertinoFormRow(
                       child: CupertinoTextFormFieldRow(
+                        controller: passwordTextEditingController,
                         obscureText: true,
                       ),
                       prefix: "Password".text.make(),
                     ),
                     CupertinoFormRow(
                       child: CupertinoTextFormFieldRow(
+                        controller: passwordcheckTextEditingController,
                         obscureText: true,
                       ),
                       prefix: "Confirm Password".text.make(),
@@ -108,6 +125,33 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                 ).centered(),
+                InkWell(
+                  onTap: () {
+                    final provider = Provider.of<GoogleSignInProvider>(context,
+                        listen: false);
+                    provider.googleLogin();
+                  },
+                  child: Container(
+                    width: 150,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.blue,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          //Image.asset(''),
+                          Text(
+                            "SignUp with Google",
+                            style: TextStyle(color: Colors.black),
+                          ).centered().px4(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ).centered().py12(),
               ],
             ),
           ),
