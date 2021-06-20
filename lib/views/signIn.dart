@@ -1,5 +1,8 @@
+import 'package:endroid/services/auth.dart';
 import 'package:endroid/views/signUp.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
@@ -139,7 +142,40 @@ class _LoginPageState extends State<LoginPage> {
                       MaterialStateProperty.all(context.accentColor),
                 ),
                 child: "Sign Up".text.xl2.make(),
-              )
+              ),
+              InkWell(
+                onTap: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.googleLogin();
+                },
+                child: Container(
+                  width: 160,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.blue,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.google,
+                          color: Colors.red,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          "SignUp with Google",
+                          style: TextStyle(color: Colors.black),
+                        ).centered().px4(),
+                      ],
+                    ),
+                  ),
+                ),
+              ).centered().py12(),
             ],
           ),
         ),

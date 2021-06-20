@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "542702695068",
+    "project_id": "endroid-ea4e3",
+    "storage_bucket": "endroid-ea4e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542702695068:android:422a0aca1fd03b80b3b359",
+        "android_client_info": {
+          "package_name": "com.example.endroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542702695068-mgck9eifgdidu0pnbg2m7j51fel5d01l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBwKaxlA7MW5Fc1kAAPNzJO3RU-LiKigE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542702695068-mgck9eifgdidu0pnbg2m7j51fel5d01l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
