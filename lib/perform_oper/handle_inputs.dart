@@ -1,5 +1,7 @@
+import 'dart:convert';
+import 'package:string_validator/string_validator.dart';
 import 'package:endroid/bots/calculator.dart';
-
+import 'package:http/http.dart' as http;
 class Handle {
    calculate(var value) {
     List numbers=[];
@@ -72,8 +74,26 @@ class Handle {
     // user will just say it wants the movie recommendationss and simple TBDB api call for recommending movies
     // same can be done for recommending TV series 
   }
-  findMeanings(String value){
 
-    // simply call the api and find the meanings of the word given by user 
+
+  // to get the meaning of a given word
+  Future<String> getMeaning(var value) async{
+    String finalValue=value.toString();
+      var bool = isAlpha(finalValue);
+      if (!bool){
+      Future.delayed(Duration(seconds: 1));
+      return "String input only";}
+    
+    var url = "https://api.dictionaryapi.dev/api/v2/entries/en_US/"+finalValue;
+    final response =
+      await http.get(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    var data= jsonDecode(response.body);
+    return data[0]["meanings"][0]["definitions"][0]["definition"];
+
+  } else {
+    throw Exception('Failed to load');
   }
+}
 }
