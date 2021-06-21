@@ -68,13 +68,49 @@ class Handle {
     }
   }
 
-  movie(var value) {
-    // show movies related to what the user has entered
-    // list view and show the messages as apt
+  movieList(var val) async {
+    var url = Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?api_key=e5ef35b8dd4155623b4c1a3d6bcc3dbb&language=en-US&query=$val&page=1&include_adult=false');
+    var response = await http.get(url);
+    final Map<String, dynamic> parsedData = json.decode(response.body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List movie = [];
+      for (var item in data) {
+        List movieData = [
+          item["original_title"],
+          item["popularity"],
+          item["releaseDate"],
+          item["overview"]
+        ];
+        movie.add(movieData);
+      }
+      return movie;
+    } else {
+      throw Exception('Failed to load');
+    }
   }
-  recommendMovie() {
-    // user will just say it wants the movie recommendationss and simple TBDB api call for recommending movies
-    // same can be done for recommending TV series
+
+  recommendMovie(String val) async {
+    var url = Uri.parse(
+        'https://api.themoviedb.org/3/movie/top_rated?api_key=e5ef35b8dd4155623b4c1a3d6bcc3dbb&language=en-US&page=1');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      List movie = [];
+      for (var item in data) {
+        List movieData = [
+          item["original_title"],
+          item["popularity"],
+          item["releaseDate"],
+          item["overview"]
+        ];
+        movie.add(movieData);
+      }
+      return movie;
+    } else {
+      throw Exception('Failed to load');
+    }
   }
 
   // to get the meaning of a given word
