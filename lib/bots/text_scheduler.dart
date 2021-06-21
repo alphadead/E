@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:endroid/bots/month_and_no.dart';
 
 class Scheduler {
-   getTime() {
+  getTime() {
     var currentTime = DateTime.now();
     List availableMinutes = [];
     List availableHours = [];
@@ -15,8 +17,8 @@ class Scheduler {
     }
     print(availableHours);
     String currentMonth = Numberify().findMonthName(currentTime.month);
-    String nextMonth =
-        Numberify().findMonthName(currentTime.month == 12 ? 1 : currentTime.month + 1);
+    String nextMonth = Numberify()
+        .findMonthName(currentTime.month == 12 ? 1 : currentTime.month + 1);
     print(currentMonth);
     print(nextMonth);
 
@@ -39,7 +41,7 @@ class Scheduler {
     List toreturn = [
       // list containing the minutes left in the present hour
       availableMinutes,
-    // list containing the hours left in the present day
+      // list containing the hours left in the present day
       availableHours,
       // string name of the present month
       currentMonth,
@@ -53,17 +55,37 @@ class Scheduler {
     print(toreturn);
     return toreturn;
   }
-  // scheduleMessage(String month,int day,int hour,int min){
 
-  //   int monthNo=Numberify().convertMonthToNumber(month);
-  //   var currentTime = DateTime.now();
-  //   int currentMin=currentTime.minute;
-  //   int currentHour=currentTime.hour;
-  //   int currentDay=currentTime.day;
-  //   int currentMon=currentTime.month;
-  //   if(monthNo==currentMon){
-
-  //   }
-
-  // }
+  scheduleMessage(String month, int day, int hour, int min) {
+    int monthNo = Numberify().convertMonthToNumber(month);
+    var currentTime = DateTime.now();
+    int currentMin = currentTime.minute;
+    int currentHour = currentTime.hour;
+    int currentDay = currentTime.day;
+    int currentMon = currentTime.month;
+    var diffInMin = 0;
+    if (monthNo == currentMon && day == currentDay && hour == currentHour) {
+      diffInMin = min - currentMin;
+    } else if (monthNo == currentMon && day == currentDay) {
+      diffInMin = (60 - currentMin) + (hour - currentHour - 1) * 60 + min;
+    } else if (monthNo == currentMon) {
+      diffInMin = (60 - currentMin) +
+          (24 - currentHour - 1) * 60 +
+          (day - currentDay - 1) * 24 * 60 +
+          60 * hour +
+          min;
+    } else {
+      diffInMin = (60 - currentMin) +
+          (24 - currentHour - 1) * 60 +
+          (Numberify().getNoofDaysInMonth
+          (currentTime.month, currentTime.year)-currentDay-1) * 24 * 60 +
+          day * 24 * 60 +
+          hour * 60 +
+          min;
+    }
+    Timer(Duration(minutes: diffInMin), (){
+          // this will be entered when the time is reached 
+          // here we will call the function which will send the message 
+    });
+  }
 }
